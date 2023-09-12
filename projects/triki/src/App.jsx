@@ -9,8 +9,20 @@ import { checkWinnerFrom, checkEndGame } from "./logic/board";
 
 function App() {
   //Estados
-  const [board, setBoard] = useState(Array(9).fill(null));
-  const [turn, setTurn] = useState(TURNS.X);
+  const [board, setBoard] = useState(()=>{
+    //Si hay datos en el navegador, inicializar el estado con eso.
+    const boardFromLocalStorage = window.localStorage.getItem('board');
+    if(boardFromLocalStorage) return JSON.parse(boardFromLocalStorage);
+    return Array(9).fill(null); 
+  }
+  );
+
+  const [turn, setTurn] = useState(()=> {
+    //Cargando turno del localStorage
+    const turnFromLocalStorage = window.localStorage.getItem('turn');
+    return turnFromLocalStorage ?? TURNS.X;
+  });
+
   const [winner, setWinner] = useState(null); //null no ganador, false empate
 
   const updateBoard = (index) => {
@@ -23,9 +35,11 @@ function App() {
     // cambiar el turno
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
     setTurn(newTurn);
+    //guardar partida
+    window.localStorage.setItem('board', JSON.stringify(newBoard));
+    window.localStorage.setItem('turn', newTurn);
     // revisar ganador
     const newWinner = checkWinnerFrom(newBoard);
-
     if (newWinner) {
       confetti();
       setWinner(newWinner);
@@ -34,12 +48,16 @@ function App() {
     }
   };
 
-  //Reiniciar los estados a los valores que queramos.
+  //Reiniciar el juego (Los estados vuelven al por defecto)
   const resetGame = () => {
     setBoard(Array(9).fill(null));
     setTurn(TURNS.X);
     setWinner(null);
+
+    window.localStorage.removeItem('board');
+    window.localStorage.removeItem('turn');
   };
+
   return (
     <main className="board">
       <h1>Triki</h1>
