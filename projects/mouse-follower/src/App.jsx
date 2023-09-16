@@ -27,6 +27,16 @@ function App() {
     }
   }, [enabled])
 
+  // change className
+  useEffect(()=>{
+    document.body.classList.toggle('no-cursor', enabled);
+
+    return () => {
+      document.body.classList.remove('no-cursor');
+    }
+    
+  }, [enabled]);
+
   const handleClick = () => setEnabled(!enabled)
   return (
     <main>
