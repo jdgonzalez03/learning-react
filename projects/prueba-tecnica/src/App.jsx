@@ -10,16 +10,17 @@ export function App(){
   const [fact, setFact] = useState();
   const [imageUrl, setImageUrl] = useState();
 
-  //Obtener datos de la api. -> APRENDER FETCH A FONDO.
-  //Obtener cita de la primera api al recargar la pagina.
-  useEffect(()=>{
+  const getRandomFact = () => {
     fetch(CAT_ENDPOINT_RANDOM_FACT)
       .then(res => res.json()) //conveirto a json
       .then(data => {  //extraer datos
         const {fact} = data;
         setFact(fact);
-      });  
-  }, []);
+      });
+  }
+  //Obtener datos de la api. -> APRENDER FETCH A FONDO.
+  //Obtener cita de la primera api al recargar la pagina.
+  useEffect(getRandomFact,[]);
 
   //Obtener imagen cuando cambie el fact.
   useEffect(()=>{
@@ -37,12 +38,14 @@ export function App(){
       })
   },[fact]);
 
-  
+  const handleClick = () => {
+    getRandomFact();  
+  }
   //RENDERIZADO CONDICIONAL. 
   return (
     <main>
       <h1>App de Gatitos.</h1>
-      
+      <button onClick={handleClick}>Get new fact!</button>
       {fact && <p>{fact}</p>}
       {imageUrl && <img src={`${CAT_PREFIX_RANDOM_IMAGE_URL}${imageUrl}`} alt={`The firts three words extracted from ${fact}`}/>}
     </main>
