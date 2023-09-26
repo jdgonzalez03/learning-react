@@ -1,45 +1,26 @@
 import { useEffect, useState } from "react"
 import "./App.css"
+import { getRandomFact } from "./services/facts";
+import {useCatImage} from "./hooks/useCatImage"
 
-const CAT_ENDPOINT_RANDOM_FACT = 'https://catfact.ninja/fact';
 //const CAT_ENDPOINT_RANDOM_IMAGE = `https://cataas.com/cat/says/${firstWord}?size=50&color=red&json=true`;
 const CAT_PREFIX_RANDOM_IMAGE_URL = 'https://cataas.com/';
 
 export function App(){
 
   const [fact, setFact] = useState();
-  const [imageUrl, setImageUrl] = useState();
-
-  const getRandomFact = () => {
-    fetch(CAT_ENDPOINT_RANDOM_FACT)
-      .then(res => res.json()) //conveirto a json
-      .then(data => {  //extraer datos
-        const {fact} = data;
-        setFact(fact);
-      });
-  }
+  const { imageUrl } = useCatImage({fact});
+  
   //Obtener datos de la api. -> APRENDER FETCH A FONDO.
   //Obtener cita de la primera api al recargar la pagina.
-  useEffect(getRandomFact,[]);
+  useEffect(()=> {
+    getRandomFact().then(newFact => setFact(newFact));
+  },[]);
 
-  //Obtener imagen cuando cambie el fact.
-  useEffect(()=>{
-    if (!fact) return
-
-    const words = fact.split(' ').slice(0, 3).join(' ');
-    console.log(words);
-
-    fetch(`https://cataas.com/cat/says/${words}?size=50&color=red&json=true`)
-      .then(res => res.json())
-      .then(response => {
-        console.log(response);
-        const {url} = response;
-        setImageUrl(url);
-      })
-  },[fact]);
-
-  const handleClick = () => {
-    getRandomFact();  
+  //Cambiar cita mediante un click
+  const handleClick = async () => {
+    const newFact = await getRandomFact();
+    setFact(newFact);  
   }
   //RENDERIZADO CONDICIONAL. 
   return (
