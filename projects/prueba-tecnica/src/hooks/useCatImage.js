@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 
-//Creando customHooks
+const CAT_PREFIX_RANDOM_IMAGE_URL = 'https://cataas.com/';
+
 export function useCatImage({ fact }) {
   const [imageUrl, setImageUrl] = useState();
-  //Obtener imagen cuando cambie el fact.
+
   useEffect(() => {
     if (!fact) return;
 
@@ -20,5 +21,5 @@ export function useCatImage({ fact }) {
       });
   }, [fact]);
 
-  return { imageUrl };
+  return { imageUrl: `${CAT_PREFIX_RANDOM_IMAGE_URL}${imageUrl}` };
 } // {imageURl: 'htpps://...'}
