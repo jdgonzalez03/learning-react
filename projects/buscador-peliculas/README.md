@@ -23,3 +23,21 @@ Primera iteración:
  Haz que la búsqueda se haga automáticamente al escribir.
 
  Evita que se haga la búsqueda continuamente al escribir (debounce)
+
+
+Hooks empleados -> 
+ useState, useEffect, customHooks, useRef
+
+
+ Extraer datos de un formulario
+ 
+    // Other way to do the same using Vanilla JS
+    // const fields = Object.fromEntries(new window.FormData(event.target));
+    // const query = fields.query;
+    // console.log(query);
+
+    //Another way to do the same thing using a hook from react useRef.
+    // const inputEl = inputRef.current;
+    // const value = inputEl.value;
+
+    // console.log(value); 
