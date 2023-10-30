@@ -2,9 +2,9 @@
 
 Ecommerce
 
-- [x] Muestra una lista de productos que vienen de un JSON
-- [x] Añade un filtro por categoría
-- [x] Añade un filtro por precio
+- [bien] Muestra una lista de productos que vienen de un JSON
+- [bien] Añade un filtro por categoría
+- [bien] Añade un filtro por precio
 
 Haz uso de useContext para evitar pasar props innecesarias.
 
@@ -16,4 +16,4 @@ Carrito:
 - [x] Sincroniza los cambios del carrito con la lista de productos.
 - [x] Guarda en un localStorage el carrito para que se recupere al recargar la página. (da puntos)
 
-useID
+useID, useState, useContext
