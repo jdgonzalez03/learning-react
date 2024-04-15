@@ -1,5 +1,5 @@
 import { useReducer } from 'react'
-import { AUTO_LANGUAGE } from '../constants'
+import { AUTO_LANGUAGE } from '../constants.d'
 import { type FromLanguage, type Language, type Action, type State } from '../types'
 
 // 1. Create a initialState
@@ -20,12 +20,10 @@ function reducer (state: State, action: Action) {
     // porque lo evitamos en los componentes
     if (state.fromLanguage === AUTO_LANGUAGE) return state
 
-    const loading = state.fromText !== ''
+    //const loading = state.fromText !== ''
 
     return {
       ...state,
-      loading,
-      result: '',
       fromLanguage: state.toLanguage,
       toLanguage: state.fromLanguage
     }
